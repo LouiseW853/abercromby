@@ -39,40 +39,76 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <title>On The Go</title>
+    <title>On the Go</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+$("p").click(function(){
+    $(this).hide();
+});
+});
+
+$(document).ready(function()
+{
+$("#insert").click(function(){
+var fullname=$("#fullname").val();
+var email=$("#email").val();
+var password=$("#password").val();
+var dataString="fullname="+fullname+"&email="+email+"&password="+password+"&insert=";
+if($.trim(fullname).length>0 & $.trim(email).length>0 & $.trim(password).length>0)
+{
+$.ajax({
+type: "POST",
+url:"https://devweb2015.cis.strath.ac.uk/~trb13189/Abercromby/insert.php",
+data: dataString,
+crossDomain: true,
+cache: false,
+beforeSend: function(){ $("#insert").val('Connecting...');},
+success: function(data){
+if(data=="success")
+{
+alert("inserted");
+$("#insert").val('submit');
+}
+else if(data=="error")
+{
+alert("error");
+}
+}
+});
+}return false;
+});
+});
+</script>
 </head>
 
 <body>
-	<div class ="image-logo">
+
+  <div class ="image-logo">
 		<img src="img/logo.png" alt = "On The Go">
 	</div>
-    <div class="app">
-		
-		<form>
-			<h1>Username:</h1>
-			<input type = "text" id = "username" class = "entrybox">
-			<br>
-			<h1>Password:</h1>
-			<input type = "password" id = "password" class = "entrybox">
-		
-			<br>
-			<br>
-			<button type = "submit" id = "submit" class = "button"> Log In </button>
-			<br>
-			<br>
-			<br>
-		</form>
-		<button type = "submit" id = "submit" class = "button"> Sign Up </button>
+
+  <div class = "app">
+   <h1> Sign up </h1>
+     <input type="hidden" id = "id" value = ""/>
+               <label>Fullname:</label>
+   <input type = "text" id = "fullname"  class = "entrybox" >
+               <label> E-mail: </label>
+   <input type = "email" id = "email" value = "" class = "entrybox">
+   <input type = "password" id = "password" value = "" class = "entrybox" >
+
+   <input type="button" id="insert" class="button" value="Insert"/>
+      <p>If you click on me, I will disappear.</p>
+      <p>Click me away!</p>
+      <p>Click me too!</p>
+
     </div>
-	
-	
-	
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
         app.initialize();
     </script>
 </body>
-
 
 </html>
