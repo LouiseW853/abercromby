@@ -1,0 +1,15 @@
+<?php
+ include "db.php";
+ if(isset($_POST['insert']))
+ {
+ $fullname=$_POST['fullname'];
+ $username=$_POST['username'];
+ $email=$_POST['email'];
+ $password=$_POST['password'];
+ $q=mysql_query("INSERT INTO `abercromby` (`fullname`, 'username',`email`,`password`) VALUES ('$fullname', '$username','$email','$password')");
+ if($q)
+  echo "success";
+ else
+  echo "error";
+ }
+ ?>

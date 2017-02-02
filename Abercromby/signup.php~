@@ -1,0 +1,37 @@
+<?php
+
+mysql_connect("devweb2015.cis.strath.ac.uk", "trb13189", "Poh3Faith5li");
+mysql_select_db("trb13189") or die(mysql_error());
+echo "connected to database";
+
+if(isset($_POST['submit']))
+{
+$fullname=mysql_real_escape_string(htmlspecialchars(trim($_POST['fullname'])));
+$email=mysql_real_escape_string(htmlspecialchars(trim($_POST['email'])));
+$password=mysql_real_escape_string(htmlspecialchars(trim($_POST['password'])));
+
+$query = mysql_query($con, "INSERT INTO 'phonegap_login' ('fullname', 'email', 'password') VALUES ('$fullname', '$email', '$password')");
+
+
+if ($query) {
+echo "success";
+}
+else {
+echo "error";}
+
+else
+{
+$date=date("d-m-y h:i:s");
+$q=mysql_query("insert into `phonegap_login` (`reg_date`,`fullname`,`email`,`password`) values ('$date','$fullname','$email','$password')");
+if($q)
+{
+echo "success";
+}
+else
+{
+echo "failed";
+}
+}
+echo mysql_error();
+}
+?>
