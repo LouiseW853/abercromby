@@ -1,4 +1,4 @@
-/*
+//*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -63,7 +63,7 @@ body {
 	margin-left:auto;
 	margin-right:auto;
 }
-.app {	
+.app {
 	width:50%;
 	padding:2%;
 	text-align:center;
@@ -73,7 +73,7 @@ body {
 
 /* Landscape layout (with min-width) */
 @media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
-	
+
 	.app {
     width:50%;
 	padding:2%;
@@ -102,7 +102,7 @@ h1 {
     50% { opacity: 0.4; }
     to { opacity: 1.0; }
 }
- 
+
 @-webkit-keyframes fade {
     from { opacity: 1.0; }
     50% { opacity: 0.4; }
