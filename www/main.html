@@ -42,66 +42,15 @@
     <title>On the Go</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script>
-    $(document).ready(function()
-    {
-    $("#login").click(function(){
-      var email=$("#username").val();
-      var password=$("#password").val();
-      var dataString="username="+username+"&password="+password+"&login=";
-        if($.trim(email).length>0 & $.trim(password).length>0)
-        {
-            alert("i get here");
-          $.ajax({
-            type: "POST",
-            url:"https://devweb2015.cis.strath.ac.uk/~trb13189/Abercromby/login.php",
-            data: dataString,
-            crossDomain: true,
-            cache: false,
-            beforeSend: function(){ $("#login").val('Connecting...');},
-            success: function(data){
-            if(data=="success")
-            {
 
-              localStorage.login="true";
-              localStorage.email=username;
-              window.location.href = "main.html";
-            }
-            else if(data=="failed")
-            {
-            alert("error");
-            }
-
-          }
-          });
-          }return false;
-          });
-          });
           </script>
     </script>
 </head>
 
 <body>
-  <div class = main>
-
   <div class = "app">
-    <div class ="image-logo">
-          <img src="img/logo.png" alt = "On The Go">
-      </div>
-  <h2>username:</h2>
-     <input type = "text" id = "username"  class = "entrybox">
-  <br>
-  <h2>Password:</h2>
-  <input type = "password" id = "password" class = "entrybox">
+    <p> hello world </p>
 
-  <br>
-  <br>
- <input type = "button" id = "login" value = "Log In" class = "button"></input>
-  <br>
-  <br>
-  <br>
-  <a href = "signup.html"> <button class = "buttonblue" id = "register" > Register </button></a>
-</div>
 <div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
