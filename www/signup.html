@@ -66,7 +66,9 @@ beforeSend: function(){ $("#insert").val('Connecting...');},
 success: function(data){
 if(data=="success")
 {
-alert("inserted");
+alert("You have signed up!");
+localStorage.firstname=firstname;
+localStorage.lastname =lastname;
 $("#insert").val('submit');
 }
 else if(data=="error")
@@ -105,8 +107,9 @@ alert("error");
   <div class = "app">
    <h1> Sign up </h1>
    <div class = "list">
+     <form method = "post" action = "">
      <input type="hidden" id = "id" value = ""/>
-               <h2>First name:</h2>
+   <h2>First name:</h2>
    <input type = "text" id = "firstname"  class = "entrybox" >
    <h2> Last name: </h2>
    <input type = "text" id = "lastname" class = "entrybox">
@@ -116,9 +119,10 @@ alert("error");
    <input type = "email" id = "email" value = "" class = "entrybox">
    <h2> Password: </h2>
    <input type = "password" id = "password" value = "" class = "entrybox" >
-
+   <br>
    <input type="button" id="insert" class="buttonblue" value="Register"/>
    <br>
+ </form>
    <p><i> Already have an account?</i></p> <a href = "index.html"> <p> Log in. </p></a>
 
     </div>
