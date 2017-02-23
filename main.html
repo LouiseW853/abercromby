@@ -43,7 +43,7 @@
   }
 
 //get the details of the product from database and show to user
-
+//essentially a big if statement
 $(document).ready(function() {
   $("#mbdetails").click(function(){
     var product = document.getElementById("mbdetails").value;
@@ -170,6 +170,10 @@ $("#waterdetails").click(function(){
   }
   })
 });
+/*Apple buy code to try and obtain health points and store them somewhere*/
+$("applebuy").click(function() {
+
+})
 });
   /*if(typeof(Storage) !== "undefined") {
     if(localStorage.username){
@@ -182,15 +186,16 @@ document.getElementById("result").innerHTML = "welcome " +localStorage.username;
         </head>
 
 <body>
+  <!-- This is the code for the nav menu. The classes such as "content" is
+controlled in the main.css class-->
   <section id = "top">
   <div class = "menu">
   <img onclick = "navmenu()" class ="dropbutton" id = "menu-icon" src="img/hamburger.png" alt = "Menu">
       <div id = "menucontent" class = "content">
         <a href="#">Home</a>
-        <a href="#">Account</a>
+        <a href="account.html">Account</a>
         <a href="#">Our Ethos</a>
         <a href="logout.html">Log Out</a>
-
 </div>
 <img id = "image-logo" src="img/logomain.png" alt = "Abercromby">
 </div>
@@ -199,22 +204,36 @@ document.getElementById("result").innerHTML = "welcome " +localStorage.username;
 <hr>
 
 <section class = "points">
+  <!-- This is the code that will contain the images for the health points a user can get-->
+  <div id = "imagecontainer">
   <img id = "border1" src="img/border img 1.png" >
+  <img id= "hp0" src = "img/HP0.png">
   <img id = "border2" src="img/border img 2.png">
+</div>
 </section>
+<!-- Just a line to seperate the content-->
 <hr>
 <section class = "vending">
+<!-- Row 1 holds the marsbar and apple product details/buy-->
   <div id = "row1">
+    <!--Marsbar -->
     <div>
-
  <img id = "product" src="img/marsbar.png" >
+
+  <button id = "mbbuy" value = "0" class = "buttonblue">Buy</button>
+  <br>
+
  <button id = "mbdetails" value = "Marsbar" class = "button">Details</button>
  <br>
+
  <div class = "hidden" id = "content"></div>
  </div>
 
+ <!-- apple-->
  <div>
  <img id = "product" src="img/apple.png" >
+ <br>
+ <button id = "applebuy" value = "1" class = "buttonblue">Buy</button>
  <br>
  <input type = "button" class = "button" value = "Details" id = "appledetails"></input>
 <br>
@@ -222,16 +241,23 @@ document.getElementById("result").innerHTML = "welcome " +localStorage.username;
  </div>
   </div>
   <br>
+  <!--Holds the next details of the tropicana and the sandwhich option-->
   <div id = "row2">
     <div>
+      <!-- Tropicana-->
   <img id = "product" src="img/oj.png" >
+  <button id = "ojbuy" value = "tropicana" class = "buttonblue">Buy</button>
+  <br>
 <input type = "button" class = "button" value = "Details" id = "ojdetails"></input>
 <br>
 <div class = "hidden" id = "oj"></div>
 </div>
  </div>
+ <!--BLT Sandwhich -->
  <div>
   <img id = "product" src="img/sandwhich.png" >
+  <button id = "bltbuy" value = "BLT" class = "buttonblue">Buy</button>
+  <br>
    <input type = "button" class = "button" value = "Details" id = "bltdetails"></input>
 <br>
 <div class = "hidden" id = "sandwhich"></div>
@@ -239,15 +265,22 @@ document.getElementById("result").innerHTML = "welcome " +localStorage.username;
   </div>
   <br>
   <div id = "row3">
+    <!--Holds the last two products, crisps and water-->
     <div>
+      <!--crisps -->
   <img id = "product" src="img/crisps.png" >
+  <button id = "crispsbuy" value = "crisps" class = "buttonblue">Buy</button>
+  <br>
    <input type = "button" class = "button" value = "Details" id = "crispdetails"></input>
 <br>
 <div class = "hidden" id = "crisps"></div>
  </div>
   <br>
   <div>
+    <!-- Water-->
   <img id = "product" src="img/water.png">
+  <button id = "waterbuy" value = "water" class = "buttonblue">Buy</button>
+  <br>
    <input type = "button" class = "button" value = "Details" id = "waterdetails"></input>
 <br>
 <div class = "hidden" id = "water"></div>

@@ -23,68 +23,31 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>
-    $(document).ready(function()
-    {
-     if (window.localStorage.getItem("loggedIn"==1)){
-        //logged in
-       window.location.href = "main.html";
-     }
+    $(document).ready(function(){
 
-    $("#login").click(function(){
-      var username=$("#username").val();
-      var password=$("#password").val();
-      var dataString="username="+username+"&password="+password+"&login=";
-        if($.trim(username).length>0 & $.trim(password).length>0)
-        {
-          $.ajax({
-            type: "POST",
-            url:"https://devweb2015.cis.strath.ac.uk/~trb13189/Abercromby/login.php",
-            data: dataString,
-            crossDomain: true,
-            cache: false,
-            beforeSend: function(){ $("#login").val('Connecting...');},
-            success: function(data){
-            if(data=="success")
-            {
-              window.localStorage.setItem("loggedIn", "1");
-              localStorage.login="true";
-              localStorage.username=username;
-              window.location.href = "main.html";
-            }
-            else if(data=="failed")
-            {
-            alert("Username or password is not correct");
-            }
-          }
-          });
-          }return false;
-          });
-          });
-
-
-          </script>
+      $("#logout").click(function() {
+        localStorage.clear();
+        window.location.href="index.html";
+      })
+    });
     </script>
 </head>
 
 <body>
   <section id = "maincontent">
 <div class = "app">
-    <br>
-    <img id = "image-logo" src="img/logo.png" alt = "On The Go">
-    <br>
-
-  <h2>Username:</h2>
-     <input type = "text" id = "username"  class = "entrybox">
-  <br>
-  <h2>Password:</h2>
-  <input type = "password" id = "password" class = "entrybox">
-  <br>
-  <br>
- <input type = "button" id = "login" value = "Log In" class = "button"></input>
   <br>
   <br>
   <br>
-  <a href = "signup.html"> <button class = "buttonblue" id = "register" > Register </button></a>
+  <h2><i>Are you sure you want to log out?</i></h2>
+  <br>
+  <br>
+  <br>
+ <input type = "button" id = "logout" value = "Log Out" class = "button"></input>
+  <br>
+  <br>
+  <br>
+  <a href = "main.html"><input type = "button" id = "goback" value = "Back to home" class = "buttonblue"></input></a>
 </div>
 </section>
 
