@@ -30,6 +30,40 @@
       }
     }
   }
+$(document).ready(function(){
+  $("#top-up").submit(function(event){
+  //code to handle top up value here. Will post to php page that will update the database
+  //this will then print the users account to display how much they have left on their card.
+  var topup = document.getElementById("topup").value;
+  var username = localStorage.username;
+  var dataString="username="+username+"&topup="+topup+"&submit";
+  var c = window.confirm("Are you sure you want to top up £" + topup);
+  if (c==true){
+    if($.trim(username).length>0 & $.trim(topup).length>0)
+    {
+    $.ajax({
+      type: "POST",
+      url:"https://devweb2015.cis.strath.ac.uk/~trb13189/Abercromby/topup.php",
+      data: dataString,
+      crossDomain: true,
+      cache: false,
+      success: function(data) {
+          $("#account").html(data);
+      }
+    })
+  }return false;
+}
+  });
+
+  if(typeof(Storage) !== "undefined") {
+    if(localStorage.username){
+  document.getElementById("user").innerHTML = "welcome " +localStorage.username;
+    } else {
+      document.getElementById("user").innerHTML = "user does not exist";
+    }
+  }
+});
+
   </script>
   </head>
 <title> On the Go </title>
@@ -53,8 +87,8 @@
 
   <hr>
   <p> Select the amount you would like to top up by, if any..</p>
-<form action = "">
-  <select name = "top up">
+<form id = "top-up">
+  <select id = "topup">
     <option value = "1">£1</option>
         <option value = "2">£2</option>
             <option value = "3">£3</option>
@@ -64,6 +98,14 @@
                   </select>
                   <input type = "submit" value = "submit">
         </form>
+        <br>
+        <!-- displays the username of the user logged in-->
+        <div id = "user">
+        </div>
+        <br>
+        <!--Shows the users balance in their account-->
+        <div id = "account">
+        </div>
 
 
 
