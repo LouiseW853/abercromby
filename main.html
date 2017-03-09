@@ -189,6 +189,11 @@ $("button").click(function() {
         else {
           alert("you bought a "+product);
             $("#test").html(data);
+            localStorage.points = data;
+            location.reload();
+            if (data == 10){
+              alert("You gained £3 free credit for all of your healthy eating!");
+            }
           }
 
       }
@@ -198,6 +203,53 @@ alert(product);
 
 
 })
+if(typeof(Storage) !== "undefined") {
+  if(localStorage.username){
+    if (localStorage.points == "0"){
+      document.getElementById("hp0").src = "img/HP0.png";
+    }
+    else if(localStorage.points =="1"){
+                    document.getElementById("hp0").src = "img/HP1.png";
+    }
+    else if(localStorage.points =="2"){
+                    document.getElementById("hp0").src = "img/HP2.png";
+    }
+    else if(localStorage.points =="3"){
+                    document.getElementById("hp0").src = "img/HP3.png";
+    }
+    else if(localStorage.points =="4"){
+                    document.getElementById("hp0").src = "img/HP4.png";
+    }
+    else if(localStorage.points =="5"){
+                    document.getElementById("hp0").src = "img/HP5.png";
+    }
+    else if(localStorage.points =="6"){
+                    document.getElementById("hp0").src = "img/HP6.png";
+    }
+    else if(localStorage.points =="7"){
+                    document.getElementById("hp0").src = "img/HP7.png";
+    }
+    else if(localStorage.points =="8"){
+                    document.getElementById("hp0").src = "img/HP8.png";
+    }
+    else if(localStorage.points =="9"){
+                    document.getElementById("hp0").src = "img/HP9.png";
+    }
+    else if(localStorage.points =="10"){
+                    document.getElementById("hp0").src = "img/HP10.png";
+                  //  alert("You have gained £3 of free credit!");
+    }
+    else if(localStorage.points =="11"){
+      document.getElementById("hp0").src = "img/HP1.png";
+    }
+    else if(localStorage.points =="12"){
+      document.getElementById("hp0").src = "img/HP2.png";
+    } else {
+    alert("huh?");
+  }
+  }
+}
+
 });
 
 </script>
