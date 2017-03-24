@@ -9,6 +9,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
     <!-- main style sheet-->
     <link rel="stylesheet" type="text/css" href="css/main.css" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <script>
@@ -31,6 +32,28 @@
     }
   }
 $(document).ready(function(){
+  $("#balance").click(function(){
+  //  navigator.notification.beep(5);
+  var username = localStorage.username;
+  var topup = 0;
+  var dataString="username="+username+"&topup="+topup;
+  if($.trim(username).length>0 & $.trim(topup).length>0)
+  {
+  $.ajax({
+    type: "POST",
+    url:"https://devweb2015.cis.strath.ac.uk/~trb13189/Abercromby/topup.php",
+    data: dataString,
+    crossDomain: true,
+    cache: false,
+    success: function(data) {
+        $("#account").html(data);
+        if(data < 2){
+        navigator.vibrate(2000);
+      }
+    }
+  })
+}return false;
+});
   $("#top-up").submit(function(event){
   //code to handle top up value here. Will post to php page that will update the database
   //this will then print the users account to display how much they have left on their card.
@@ -54,10 +77,29 @@ $(document).ready(function(){
   }return false;
 }
   });
-
+  $("#Historyview").submit(function(event){
+  var order = document.getElementById("order").value;
+  var username = localStorage.username;
+  var dataString="username="+username+"&order"+order;
+    if($.trim(username).length>0 & $.trim(order).length>0)
+    {
+    $.ajax({
+      type: "POST",
+      url:"https://devweb2015.cis.strath.ac.uk/~trb13189/Abercromby/history.php",
+      data: dataString,
+      crossDomain: true,
+      cache: false,
+      success: function(data) {
+          $("#historyview").removeClass('hidden');
+          $("#historyview").html(data);
+      }
+    })
+  }return false;
+  });
+//Displays username
   if(typeof(Storage) !== "undefined") {
     if(localStorage.username){
-  document.getElementById("user").innerHTML = "welcome " +localStorage.username;
+  document.getElementById("user").innerHTML = "Welcome " +localStorage.username;
     } else {
       document.getElementById("user").innerHTML = "user does not exist";
     }
@@ -68,7 +110,7 @@ $(document).ready(function(){
   </head>
 <title> On the Go </title>
 
-  <body>
+  <body class = "splash">
 
     <!-- This is the code for the nav menu. The classes such as "content" is
   controlled in the main.css class-->
@@ -77,14 +119,25 @@ $(document).ready(function(){
     <img onclick = "navmenu()" class ="dropbutton" id = "menu-icon" src="img/hamburger.png" alt = "Menu">
         <div id = "menucontent" class = "content">
           <a href="main.html">Home</a>
-          <a href="#">Account</a>
-          <a href="#">Our Ethos</a>
+          <a href="#" style = "background-color:green; color:white">Account</a>
+          <a href="ourethos.html">Our Ethos</a>
           <a href="logout.html">Log Out</a>
   </div>
   <img id = "image-logo" src="img/logomain.png" alt = "Abercromby">
   </div>
   </section>
 
+  <hr>
+  <!-- displays the username of the user logged in-->
+  <br>
+  <div id = "user">
+  </div>
+  <br>
+  <div id = "account">
+  </div>
+  <br>
+  <button class = "button" id = "balance" style = "height: 10%;">View Balance </button>
+  <br>
   <hr>
   <p> Select the amount you would like to top up by, if any..</p>
 <form id = "top-up">
@@ -96,19 +149,24 @@ $(document).ready(function(){
                   <option value = "5">£5</option>
                     <option value = "10">£10</option>
                   </select>
-                  <input type = "submit" value = "submit">
+                  <br>
+                  <br>
+                  <input type = "submit" value = "submit" class = "buttonblue">
         </form>
         <br>
-        <!-- displays the username of the user logged in-->
-        <div id = "user">
+        <hr>
+          <form id = "Historyview">
+            <select id = "order">
+              <option value = "default">Default</option>
+              <option value = "descending">Descending</option>
+              <option value = "ascending">Ascending</option>
+            </select>
+            <br>
+            <br>
+          <input type = "submit"  value = "History"  class = "button" id = "history" style = "height: 10%;">
+          </form>
+          <br>
+        <div class = "hidden" id = "historyview">
         </div>
-        <br>
-        <!--Shows the users balance in their account-->
-        <div id = "account">
-        </div>
-
-
-
-
 </body>
 </html>

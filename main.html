@@ -8,32 +8,20 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
     <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
-    <!-- Good default declaration:
-   * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-   * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-   * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-       * Enable inline JS: add 'unsafe-inline' to default-src
-       * Enable eval(): add 'unsafe-eval' to default-src
-   * Create your own at http://cspisawesome.com
-   -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
-
+    <!--Main.css style sheet, contains all styling for the layout of the pages within the app, exluding login and log out-->
     <link rel="stylesheet" type="text/css" href="css/main.css" />
     <title>On the Go</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>
-    function navmenu() {
+    function navmenu() { //navigatio bar function
       document.getElementById("menucontent").classList.toggle("show");
   }
-
-  // Close the dropdown if the user clicks outside of it
-  window.onclick = function(event) {
-    if (!event.target.matches('.dropbutton')) {
-
-      var dropdowns = document.getElementsByClassName("content");
+  window.onclick = function(event) { // Close the dropdown if the user clicks outside of it
+    if (!event.target.matches('.dropbutton')) { // if burger menu is clicked
+      var dropdowns = document.getElementsByClassName("content"); //get the content inside
       var i;
-      for (i = 0; i < dropdowns.length; i++) {
+      for (i = 0; i < dropdowns.length; i++) {  //loop of choices in the menu
         var openDropdown = dropdowns[i];
         if (openDropdown.classList.contains('show')) {
           openDropdown.classList.remove('show');
@@ -44,8 +32,10 @@
 
 //get the details of the product from database and show to user
 //essentially a big if statement
+//defintily a better way of doing this
 $(document).ready(function() {
-  $("#mbdetails").click(function(){
+  getimage();
+  $("#mbdetails").click(function(){ //details button selected for marsbar
     var product = document.getElementById("mbdetails").value;
     var dataString = "product" + product + "&mbdetails";
     $.ajax({
@@ -55,18 +45,18 @@ $(document).ready(function() {
       crossDomain: true,
       cahse: false,
       success: function(data) {
-          $("#apple").addClass('hidden');
+          $("#apple").addClass('hidden'); //adds the hidden class to all of the other details so that only one can be selected at a time
           $("#crisps").addClass('hidden');
           $("#oj").addClass('hidden');
             $("#sandwhich").addClass('hidden')
               $("#water").addClass('hidden');
-        $("#content").removeClass('hidden');
+        $("#content").removeClass('hidden'); //removes the hidden class of the details div that we want to show
         $("#content").html(data);
     }
     })
   });
 
-  $("#appledetails").click(function(){
+  $("#appledetails").click(function(){ //apple details function, all of the same code as above but relevant to apple
     var product = document.getElementById("appledetails").value;
     var dataString = "product" + product + "&appledetails";
     $.ajax({
@@ -86,8 +76,7 @@ $(document).ready(function() {
     }
     })
   });
-
-  $("#ojdetails").click(function(){
+  $("#ojdetails").click(function(){ //oj details function
     var product = document.getElementById("ojdetails").value;
     var dataString = "product" + product + "&ojdetails";
     $.ajax({
@@ -108,7 +97,7 @@ $(document).ready(function() {
     })
   });
 
-  $("#crispdetails").click(function(){
+  $("#crispdetails").click(function(){ //crisps details function
     var product = document.getElementById("crispdetails").value;
     var dataString = "product" + product + "&crispdetails";
     $.ajax({
@@ -129,7 +118,7 @@ $(document).ready(function() {
     })
   });
 
-  $("#bltdetails").click(function(){
+  $("#bltdetails").click(function(){ //sandwhich detils function
     var product = document.getElementById("bltdetails").value;
     var dataString = "product" + product + "&bltdetails";
     $.ajax({
@@ -150,7 +139,7 @@ $(document).ready(function() {
     })
   });
 
-$("#waterdetails").click(function(){
+$("#waterdetails").click(function(){ //water details function
   var product = document.getElementById("waterdetails").value;
   var dataString = "product" + product + "&waterdetails";
   $.ajax({
@@ -171,28 +160,27 @@ $("#waterdetails").click(function(){
   })
 });
 /*Apple buy code to try and obtain health points and store them somewhere*/
-$("button").click(function() {
-  var product = this.id;
-  var username = localStorage.username;
-  var dataString="username="+username+"&product="+product+"&button";
+$("button").click(function() { //this code is used to purchase an item
+  var product = this.id; //this gets the button id for a product, which are all different based on the product
+  var username = localStorage.username; // stores the username
+  var dataString="username="+username+"&product="+product+"&button"; //these will be sent as data
   if($.trim(username).length>0 & $.trim(product).length>0){
     $.ajax({
       type: "POST",
-      url:"https://devweb2015.cis.strath.ac.uk/~trb13189/Abercromby/pay.php",
+      url:"https://devweb2015.cis.strath.ac.uk/~trb13189/Abercromby/pay.php", //sent to the pay page
       data: dataString,
       crossDomain: true,
       cache: false,
       success: function(data) {
-        if(data =="failed") {
-          alert("insufficient funds");
+        if(data =="failed") { //if failed
+          alert("insufficient funds"); //the user did not have enough money to make a payment
         }
-        else {
-          alert("you bought a "+product);
-            $("#test").html(data);
-            localStorage.points = data;
-            location.reload();
-            if (data == 10){
-              alert("You gained £3 free credit for all of your healthy eating!");
+        else { //if successful
+          alert("you bought a "+product); //alerts the user which product they bought
+            localStorage.points = data; //gets the health points that are returned from the server and stores this in the local storage
+            getimage(); //calls the get image function which represents the health points
+            if (data == 10){ //if there are 10 healthpoints then alert the user
+              alert("You gained £3 free credit for all of your healthy eating!"); //user has been alerted that they have £3 free credit
             }
           }
 
@@ -203,15 +191,16 @@ alert(product);
 
 
 })
+function getimage(){ //get image function that represents the number of healthpoints a user has.
 if(typeof(Storage) !== "undefined") {
-  if(localStorage.username){
-    if (localStorage.points == "0"){
-      document.getElementById("hp0").src = "img/HP0.png";
+  if(localStorage.username){ //check localstorage username
+    if (localStorage.points == "0"){ //check points stored in local storage and if 0
+      document.getElementById("hp0").src = "img/HP0.png";//show relevant picture
     }
-    else if(localStorage.points =="1"){
-                    document.getElementById("hp0").src = "img/HP1.png";
+    else if(localStorage.points =="1"){ //if points are 1
+                    document.getElementById("hp0").src = "img/HP1.png"; //show relevant picture
     }
-    else if(localStorage.points =="2"){
+    else if(localStorage.points =="2"){ //this continues all the way up until 10
                     document.getElementById("hp0").src = "img/HP2.png";
     }
     else if(localStorage.points =="3"){
@@ -239,19 +228,16 @@ if(typeof(Storage) !== "undefined") {
                     document.getElementById("hp0").src = "img/HP10.png";
                   //  alert("You have gained £3 of free credit!");
     }
-    else if(localStorage.points =="11"){
-      document.getElementById("hp0").src = "img/HP1.png";
+    else if(localStorage.points =="11"){ //if local storage points =11, this is due to the updating of the database not synchronising with the app when it gets to 10
+      document.getElementById("hp0").src = "img/HP1.png";//show image 1, this is okay to do because 1 healthpoint doesnt mean anything
     }
     else if(localStorage.points =="12"){
       document.getElementById("hp0").src = "img/HP2.png";
-    } else {
-    alert("huh?");
-  }
+    }
   }
 }
-
+}
 });
-
 </script>
         </head>
 
@@ -260,14 +246,14 @@ if(typeof(Storage) !== "undefined") {
 controlled in the main.css class-->
   <section id = "top">
   <div class = "menu">
-  <img onclick = "navmenu()" class ="dropbutton" id = "menu-icon" src="img/hamburger.png" alt = "Menu">
-      <div id = "menucontent" class = "content">
-        <a href="#">Home</a>
+  <img onclick = "navmenu()" class ="dropbutton" id = "menu-icon" src="img/hamburger.png" alt = "Menu"> <!--Nav menu image, hamburger menu-->
+      <div id = "menucontent" class = "content">  <!--Content and pages within the nav menu bar-->
+        <a href="#" style = "background-color:green; color:white">Home</a>
         <a href="account.html">Account</a>
-        <a href="#">Our Ethos</a>
+        <a href="ourethos.html">Our Ethos</a>
         <a href="logout.html">Log Out</a>
 </div>
-<img id = "image-logo" src="img/logomain.png" alt = "Abercromby">
+<img id = "image-logo" src="img/logomain.png" alt = "Abercromby">  <!--Companies logo at top of page-->
 </div>
 </section>
 
@@ -276,39 +262,28 @@ controlled in the main.css class-->
 <section class = "points">
   <!-- This is the code that will contain the images for the health points a user can get-->
   <div id = "imagecontainer">
-  <img id = "border1" src="img/border img 1.png" >
+  <img id = "border1" src="img/border img 1.png" > <!--border-->
   <img id= "hp0" src = "img/HP0.png">
-  <img id = "border2" src="img/border img 2.png">
+  <img id = "border2" src="img/border img 2.png"> <!--border-->
 </div>
 </section>
-<!-- Just a line to seperate the content-->
-<hr>
+<hr> <!-- a line to seperate the content-->
 <section class = "vending">
-<!-- Row 1 holds the marsbar and apple product details/buy-->
-  <div id = "row1">
-    <!--Marsbar -->
-    <div>
- <img id = "product" src="img/marsbar.png" >
-
-  <button id = "Marsbar" value = "0" class = "buttonblue">Buy</button>
-  <br>
-
- <input type = "button" id = "mbdetails" value = "Details" class = "button"></button>
- <br>
-
- <div class = "hidden" id = "content"></div>
- </div>
-<div id = "test"></div>
- <!-- apple-->
- <div>
- <img id = "product" src="img/apple.png" >
- <br>
- <button id = "Apple" value = "Apple" class = "buttonblue">Buy</button>
- <br>
- <input type = "button" class = "button" value = "Details" id = "appledetails"></input>
-<br>
- <div class = "hidden" id = "apple"></div>
- </div>
+  <div id = "row1"> <!-- Row 1 holds the marsbar and apple product details/buy-->
+    <img id = "product" src="img/marsbar.png" >  <!--Marsbar -->
+    <button id = "Marsbar" value = "0" class = "buttonblue">Buy</button>   <!--Marsbar buy-->
+    <br>
+    <input type = "button" id = "mbdetails" value = "Details" class = "button"></button>  <!--Marsbar Details button-->
+    <br>
+    <div class = "hidden" id = "content"></div>   <!--Div content will hold info on marsbar details and display when class "hidden" is removed-->
+    <img id = "product" src="img/apple.png" > <!--Apple -->
+    <br>
+    <button id = "Apple" value = "Apple" class = "buttonblue">Buy</button><!--Apple buy button-->
+    <br>
+    <input type = "button" class = "button" value = "Details" id = "appledetails"></input> <!--Apple details button-->
+    <br>
+    <div class = "hidden" id = "apple">
+    </div>
   </div>
   <br>
   <!--Holds the next details of the tropicana and the sandwhich option-->

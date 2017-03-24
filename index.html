@@ -8,48 +8,38 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
     <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
-    <!-- Good default declaration:
-   * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-   * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-   * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-       * Enable inline JS: add 'unsafe-inline' to default-src
-       * Enable eval(): add 'unsafe-eval' to default-src
-   * Create your own at http://cspisawesome.com
-   -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
-
+    <!-- style sheet for the log in and log out page, this differs from the other pages css sheets -->
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <title>On the Go</title>
-
+    <!-- importing the jquery script to use within the app-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>
     $(document).ready(function()
     {
 
-    $("#login").click(function(){
-      var username=$("#username").val();
-      var password=$("#password").val();
-      var dataString="username="+username+"&password="+password+"&login=";
+    $("#login").click(function(){ //when login is clicked
+      var username=$("#username").val(); //set username value to what was entered in username field
+      var password=$("#password").val(); //set password value to what was entered in password field
+      var dataString="username="+username+"&password="+password+"&login="; //stored these three items in one value for later
         if($.trim(username).length>0 & $.trim(password).length>0)
         {
           $.ajax({
             type: "POST",
-            url:"https://devweb2015.cis.strath.ac.uk/~trb13189/Abercromby/login.php",
-            data: dataString,
+            url:"https://devweb2015.cis.strath.ac.uk/~trb13189/Abercromby/login.php", //post data to this php server page
+            data: dataString, //send the data held in datastring
             crossDomain: true,
             cache: false,
-            beforeSend: function(){ $("#login").val('Connecting...');},
-            success: function(data){
-            if(data=="success")
+            beforeSend: function(){ $("#login").val('Connecting...');}, //change the login button to connecting so the user knows something is happening
+            success: function(data){  //on success
+            if(data=="success") //if success is returned from the server
             {
-              window.localStorage.setItem("loggedIn", "1");
-              localStorage.login="true";
-              localStorage.username=username;
-              window.location.href = "main.html";
+              window.localStorage.setItem("loggedIn", "1"); //set the session logged in to 1
+              localStorage.username=username; //set the username value in local storage to the value that was submitted and accepted in the loggin in stage
+              window.location.href = "main.html"; //redirect to the main page of the app
             }
-            else if(data=="failed")
+            else if(data=="failed") //if login was unsuccessful
             {
-            alert("Username or password is not correct");
+            alert("Username or password is not correct"); //alert the user that either the username or password was incorrect
             }
           }
           });
@@ -64,23 +54,23 @@
 
 <body>
   <section id = "maincontent">
-<div class = "app">
-    <br>
-    <img id = "image-logo" src="img/logo.png" alt = "On The Go">
+<div class = "app"> <!-- holds the main content for the login page to keep it together, important for adjusting in css-->
+    <br><!--break line -->
+    <img id = "image-logo" src="img/logo.png" alt = "On The Go"><!--Abercromby Logo-->
     <br>
 
   <h2>Username:</h2>
-     <input type = "text" id = "username"  class = "entrybox">
+     <input type = "text" id = "username"  class = "entrybox"><!--Input box where user can enter username-->
   <br>
   <h2>Password:</h2>
-  <input type = "password" id = "password" class = "entrybox">
+  <input type = "password" id = "password" class = "entrybox"> <!--input box where user can enter password, type password so text is hidden as they type-->
   <br>
   <br>
- <input type = "button" id = "login" value = "Log In" class = "button"></input>
+ <input type = "button" id = "login" value = "Log In" class = "button"></input> <!--login button submits the data where the function can then be carried out-->
   <br>
   <br>
   <br>
-  <a href = "signup.html"> <button class = "buttonblue" id = "register" > Register </button></a>
+  <a href = "signup.html"> <button class = "buttonblue" id = "register" > Register </button></a> <!--Sign up button if user does not have an account, will redirect to the sign up page-->
 </div>
 </section>
 

@@ -71,6 +71,7 @@ localStorage.username = username;
 localStorage.firstname=firstname;
 localStorage.lastname =lastname;
 $("#insert").val('submit');
+window.location.href = "main.html";
 }
 else if(data=="error")
 {
@@ -117,7 +118,7 @@ alert("error");
    <h2> username: </h2>
    <input type = "text" id = "username" class = "entrybox">
                <h2> E-mail: </h2>
-   <input type = "email" id = "email" value = "" class = "entrybox">
+   <input type = "email" id = "email" pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value = "" class = "entrybox">
    <h2> Password: </h2>
    <input type = "password" id = "password" value = "" class = "entrybox" >
    <br>
